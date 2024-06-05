@@ -1,4 +1,5 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
+using Bulky.DataAcess.Data;
 using Bulky.Models;
 using System;
 using System.Collections.Generic;
@@ -9,41 +10,23 @@ using System.Threading.Tasks;
 
 namespace Bulky.DataAccess.Repository
 {
-    internal class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public void Add(Category entity)
+        private ApplicationDBContext _db;
+
+        public CategoryRepository(ApplicationDBContext db) : base(db)
         {
-            throw new NotImplementedException();
+            _db = db;
         }
 
-        public void Delete(Category entity)
+        public void Save()
         {
-            throw new NotImplementedException();
+            _db.SaveChanges();
         }
 
-        public void DeleteRange(IEnumerable<Category> entity)
+        public void Update(Category category)
         {
-            throw new NotImplementedException();
-        }
-
-        public Category Get(Expression<Func<Category, bool>> filter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Category> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void update(Category category)
-        {
-            throw new NotImplementedException();
+            _db.Update(category);
         }
     }
 }

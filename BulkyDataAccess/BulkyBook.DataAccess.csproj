@@ -13,8 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BulkyModels\Bulky.Models.csproj" />
-	  <ProjectReference Include="..\BulkyUtils\Bulky.Utils.csproj" />
+	  <ProjectReference Include="..\BulkyModels\BulkyBook.Models.csproj" />
+	  <ProjectReference Include="..\BulkyUtils\BulkyBook.Utils.csproj" />
 	</ItemGroup>
 
 </Project>
