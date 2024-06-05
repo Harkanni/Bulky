@@ -17,6 +17,6 @@ namespace Bulky.DataAccess.Repository.IRepository
 
         void Delete(T entity);
 
-        void DeleteRange(Expression<Func<T, bool>> filter);
+        void DeleteRange(IEnumerable<T> entity);
     }
 }

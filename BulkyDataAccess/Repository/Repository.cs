@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.DataAcess.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Repository
 {
@@ -12,33 +13,39 @@ namespace Bulky.DataAccess.Repository
     {
         private readonly ApplicationDBContext _db;
 
+        internal DbSet<T> dbSet;
+
         public Repository(ApplicationDBContext db)
         {
             _db = db;
+            this.dbSet = _db.Set<T>();
         }
         public void Add(T entity)
         {
-            throw new NotImplementedException();
+            dbSet.Add(entity);
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            dbSet.Remove(entity);
         }
 
-        public void DeleteRange(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        public void DeleteRange(IEnumerable<T> entity)
         {
-            throw new NotImplementedException();
+            dbSet.RemoveRange(entity);
         }
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+            return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbSet;
+            return query.ToList();
         }
     }
 }
