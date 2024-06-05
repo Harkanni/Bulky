@@ -1,4 +1,4 @@
-﻿namespace BulkyDataAccess
+﻿namespace BulkyBookDataAccess
 {
     public class Class1
     {

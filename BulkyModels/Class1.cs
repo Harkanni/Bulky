@@ -1,4 +1,4 @@
-﻿namespace BulkyModels
+﻿namespace BulkyBookModels
 {
     public class Class1
     {

@@ -1,4 +1,4 @@
-﻿namespace BulkyUtils
+﻿namespace BulkyBookUtils
 {
     public class Class1
     {

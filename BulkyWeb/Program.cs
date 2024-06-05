@@ -1,10 +1,10 @@
 
-using Bulky.DataAccess.Repository.IRepository;
-using Bulky.DataAcess.Data;
+using BulkyBook.DataAccess.Repository.IRepository;
+using BulkyBook.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
-using Bulky.DataAccess.Repository;
+using BulkyBook.DataAccess.Repository;
 
-namespace BulkyWeb
+namespace BulkyBookWeb
 {
     public class Program
     {
