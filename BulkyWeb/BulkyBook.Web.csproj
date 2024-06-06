@@ -20,4 +20,10 @@
     <ProjectReference Include="..\BulkyDataAccess\BulkyBook.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Customer\Views\" />
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
