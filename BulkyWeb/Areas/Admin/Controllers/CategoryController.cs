@@ -5,6 +5,7 @@ using BulkyBook.DataAccess.Repository.IRepository;
 
 namespace BulkyBook.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
 
