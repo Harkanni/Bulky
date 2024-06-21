@@ -1,0 +1,56 @@
+﻿@model List<Product>
+
+
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-light">Create Category</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pt-2 pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Product" asp-action="create" class="btn bg-primary text-light">
+                    <i class="bi bi-plus-circle"></i> Create Category
+                </a>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Product ID</th>
+                    <th>Author Name</th>
+                    <th>Display Order</th>
+                    <th>Book Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.OrderBy(o => o.PId))
+                {
+                    <tr>
+                        <td>@obj.PId</td>
+                        <td>@obj.Author</td>
+                        <td>@obj.Price</td>
+                        <td>
+                            <div class="w-75 btn-group">
+                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.PId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.PId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-thrash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
