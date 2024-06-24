@@ -15,7 +15,7 @@
             <div class="col-6">
             </div>
             <div class="col-6 text-end">
-                <a asp-controller="Product" asp-action="create" class="btn bg-primary text-light">
+                <a asp-area="Customer" asp-controller="Product" asp-action="create" class="btn bg-primary text-light">
                     <i class="bi bi-plus-circle"></i> Create Category
                 </a>
             </div>
@@ -25,8 +25,11 @@
                 <tr>
                     <th class="text-center">Product ID</th>
                     <th>Author Name</th>
-                    <th>Display Order</th>
                     <th>Book Price</th>
+                    <th>Desc.</th>
+                    <th>ISBN</th>
+                    <th>Price 50</th>
+                    <th>Price 100</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,13 +39,17 @@
                         <td>@obj.PId</td>
                         <td>@obj.Author</td>
                         <td>@obj.Price</td>
+                        <td>@obj.Description</td>
+                        <td>@obj.ISBN</td>
+                        <td>@obj.Price50</td>
+                        <td>@obj.Price100</td>
                         <td>
                             <div class="w-75 btn-group">
-                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.PId" class="btn btn-primary mx-2">
+                                <a asp-area="Customer" asp-controller="Product" asp-action="Edit" asp-route-id="@obj.PId" class="btn btn-primary mx-2">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
 
-                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.PId" class="btn btn-danger mx-2">
+                                <a asp-area="Customer" asp-controller="Product" asp-action="Delete" asp-route-id="@obj.PId" class="btn btn-danger mx-2">
                                     <i class="bi bi-thrash-fill"></i> Delete
                                 </a>
                             </div>
