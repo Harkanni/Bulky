@@ -1,5 +1,6 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,34 +20,44 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
         public IActionResult Index()
         {
             List<Product> Products = _unitOfWork.Product.GetAll().ToList();
-            IEnumerable<SelectListItem> Category = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-            {
-                Text = u.Name,
-                Value = u.Id.ToString()
-            });
+            
             return View(Products);
         }
 
         public IActionResult Create()
         {
-            return View();
+            //IEnumerable<SelectListItem> CategoryList = 
+
+            //ViewBag.CategoryList = CategoryList;
+            //ViewData["CategoryList"] = CategoryList;
+
+            ProductVM productVM = new ProductVM
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM OBJ)
         {
-            if (product.Author == product.Description.ToString())
+            if (OBJ.Product.Author == OBJ.Product.Description.ToString())
             {
                 ModelState.AddModelError("name", "The Author directly matches the Description. Try again!");
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(product);
+                _unitOfWork.Product.Add(OBJ.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Created Successfully";
                 return RedirectToAction("Index", "Product");
             }
-            return View(product);
+            return View(OBJ);
         }
 
         public IActionResult Delete(int? id)
