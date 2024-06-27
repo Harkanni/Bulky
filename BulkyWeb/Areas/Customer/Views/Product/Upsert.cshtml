@@ -4,12 +4,12 @@
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-light">Create Category</h2>
+                <h2 class="text-light">@(Model.Product.PId != 0 ? "Update" : "Create")  Category</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
-        <form method="post" class="row">
+        <form method="post" class="row" enctype="multipart/form-data">
             <div class="border p-3">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-floating py-3 col-12">
@@ -62,14 +62,20 @@
                 </div>
 
                 <div class="form-floating py-3 mb-3">
-                    <input asp-for="Product.ImageUrl" class="form-control border-0 shadow" />
+                    <input type="file" class="form-control border-0 shadow" />
                     <label asp-for="Product.ImageUrl" class="ms-3"></label>
-                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
                 </div>
 
                 <div class="row">
                     <div class="col-6">
-                        <button class="p-3 btn btn-primary form-control" type="submit">Create</button>
+                        @if (Model.Product.PId != 0)
+                        {
+                            <button class="p-3 btn btn-primary form-control" type="submit">Update</button>
+                        }
+                        else
+                        {
+                            <button class="p-3 btn btn-primary form-control" type="submit">Create</button>
+                        }
                     </div>
                     <div class="col-6">
                         <a asp-area="Customer" asp-controller="Product" asp-action="index" class="p-3 btn btn-outline-primary form-control">Back to list</a>
