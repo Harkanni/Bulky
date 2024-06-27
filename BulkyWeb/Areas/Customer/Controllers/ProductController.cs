@@ -59,8 +59,21 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
                 string wwwRoothPath = _webHostEnvironment.WebRootPath;
                 if(file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + file.FileName;
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRoothPath, @"images\products");
+
+                    if(!string.IsNullOrEmpty(productPath))
+                    {
+                        // delete old image
+                        var oldImagePath = Path.Combine(wwwRoothPath, OBJ.Product.ImageUrl.TrimStart('\\'));
+
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.CreateNew))
                     {
