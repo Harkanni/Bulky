@@ -21,7 +21,7 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            List<Product> Products = _unitOfWork.Product.GetAll().ToList();
+            List<Product> Products = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             return View(Products);
         }
@@ -38,7 +38,9 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
                 Product = new Product()
             };
             if (id == null || id == 0)
+            {
                 return View(productVM);
+            }
 
             else
             {
@@ -48,7 +50,7 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM OBJ, IFormFile file)
+        public IActionResult Upsert(ProductVM OBJ, IFormFile? file)
         {
             if (OBJ.Product.Author == OBJ.Product.Description.ToString())
             {
@@ -57,17 +59,17 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
             if (ModelState.IsValid)
             {
                 string wwwRoothPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                if (file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRoothPath, @"images\products");
 
-                    if(!string.IsNullOrEmpty(productPath))
+                    if (!string.IsNullOrEmpty(OBJ.Product.ImageUrl))
                     {
                         // delete old image
                         var oldImagePath = Path.Combine(wwwRoothPath, OBJ.Product.ImageUrl.TrimStart('\\'));
 
-                        if(System.IO.File.Exists(oldImagePath))
+                        if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
@@ -83,8 +85,13 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
                     OBJ.Product.ImageUrl = @"\images\products\" + fileName;
                 }
 
-
-                _unitOfWork.Product.Add(OBJ.Product);
+                if (OBJ.Product.PId == 0)
+                {
+                    _unitOfWork.Product.Add(OBJ.Product);
+                } else
+                {
+                    _unitOfWork.Product.Update(OBJ.Product);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Product Created Successfully";
                 return RedirectToAction("Index", "Product");
@@ -117,6 +124,15 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
             TempData["success"] = "Successfully deleted category";
             return RedirectToAction("Index", "Product");
         }
+
+        #region
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> Products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data =  Products });
+        }
+        #endregion
     }
 }
 

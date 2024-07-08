@@ -23,26 +23,28 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th class="text-center">Product ID</th>
-                    <th>Author Name</th>
-                    <th>Book Price</th>
-                    <th>Desc.</th>
+                    <th class="text-center">Title</th>
                     <th>ISBN</th>
-                    <th>Price 50</th>
-                    <th>Price 100</th>
+                    <th>Book Price</th>
+                    <th>Author Name</th>
+                    <th>Category</th>
+                    @* <th>Price 50</th>
+                    <th>Price 100</th> *@
                 </tr>
             </thead>
             <tbody>
                 @foreach (var obj in Model.OrderBy(o => o.PId))
                 {
                     <tr>
-                        <td>@obj.PId</td>
-                        <td>@obj.Author</td>
-                        <td>@obj.Price</td>
-                        <td>@obj.Description</td>
+                        <td>@obj.Title</td>
                         <td>@obj.ISBN</td>
-                        <td>@obj.Price50</td>
-                        <td>@obj.Price100</td>
+                        <td>@obj.Price</td>
+                        <td>@obj.Author</td>
+                        <td>@obj.Category.Name</td>
+                        @* <td>@obj.PId</td> *@
+                        @* <td>@obj.Description</td> *@
+                        @* <td>@obj.Price50</td> *@
+                        @* <td>@obj.Price100</td> *@
                         <td>
                             <div class="w-75 btn-group">
                                 <a asp-area="Customer" asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.PId" class="btn btn-primary mx-2">
