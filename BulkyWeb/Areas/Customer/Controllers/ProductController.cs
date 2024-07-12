@@ -21,7 +21,7 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            List<Product> Products = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<Product> Products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
             return View(Products);
         }
@@ -88,7 +88,8 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
                 if (OBJ.Product.PId == 0)
                 {
                     _unitOfWork.Product.Add(OBJ.Product);
-                } else
+                }
+                else
                 {
                     _unitOfWork.Product.Update(OBJ.Product);
                 }
@@ -130,8 +131,34 @@ namespace BulkyBook.Web.Areas.Customer.Controllers
         public IActionResult GetAll()
         {
             List<Product> Products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-            return Json(new { data =  Products });
+            return Json(new { data = Products });
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            Product productToBeDeleted = _unitOfWork.Product.Get(u => u.PId == id);
+
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImage = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+
+            if(System.IO.File.Exists(oldImage))
+            {
+                System.IO.File.Delete(oldImage);
+            }
+
+            _unitOfWork.Product.Delete(productToBeDeleted);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete Successful" });
+        }
+
+
+
         #endregion
     }
 }
